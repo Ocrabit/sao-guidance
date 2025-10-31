@@ -13,3 +13,7 @@ dependencies = [
     "torchcodec==0.8.0",
     "widgetsnbextension>=4.0.14",
 ]
+
+# Uncomment if you have a local install of stable-audio-tools
+#[tool.uv.sources]
+#stable-audio-tools = { path = "stable-audio-tools", editable = true }
