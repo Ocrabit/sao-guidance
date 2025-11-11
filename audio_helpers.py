@@ -17,6 +17,21 @@ def get_default_soundfont():
     else:
         print(f"Using cached SoundFont: {path}")
     return path
+    
+def get_github_audio(url, filename=None):
+    """Download a GitHub audio file to data/audio/ if missing and return its path."""
+    os.makedirs("data/audio", exist_ok=True)
+    if not filename:
+        filename = os.path.basename(url)
+    path = os.path.join("data/audio", filename)
+
+    if not os.path.exists(path):
+        print(f"Downloading {filename}...")
+        urllib.request.urlretrieve(url, path)
+        print(f"Saved to {path}")
+    else:
+        print(f"Using cached file: {path}")
+    return path
 
 def render_midi(pm_obj: pretty_midi.PrettyMIDI, sample_rate=16000):
     return Audio(generate_audio_midi(pm_obj, sample_rate), rate=sample_rate)
