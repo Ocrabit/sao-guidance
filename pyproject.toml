@@ -6,14 +6,21 @@ readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
     "aeiou>=0.0.21",
+    "essentia>=2.1b6.dev1177",
     "ipywidgets>=8,<9",
     "jupyter>=1.1.1",
+    "mir-eval>=0.8.2",
     "notebook>=6.5,<7",
+    "pretty-midi>=0.2.11",
+    "pyfluidsynth>=1.3.4",
+    "sounddevice>=0.5.3",
     "stable-audio-tools>=0.0.19",
     "torchcodec==0.8.0",
+    "torchcrepe>=0.0.24",
     "widgetsnbextension>=4.0.14",
 ]
 
 # Uncomment if you have a local install of stable-audio-tools
 #[tool.uv.sources]
 #stable-audio-tools = { path = "stable-audio-tools", editable = true }
+#torchcrepe = { path = "torchcrepe_package", editable = true }

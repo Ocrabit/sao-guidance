@@ -8,6 +8,8 @@ def get_default_soundfont():
     """Download FluidR3Mono_GM.sf3 if missing and return its path."""
     path = "soundfonts/FluidR3Mono_GM.sf3"
     url = "https://github.com/musescore/MuseScore/raw/refs/heads/2.1/share/sound/FluidR3Mono_GM.sf3"
+
+    os.makedirs(path, exist_ok=True) # Ensure existence
     if not os.path.exists(path):
         print("Downloading free SoundFont FluidR3Mono_GM.sf3 for midi interactions...")
         urllib.request.urlretrieve(url, path)
