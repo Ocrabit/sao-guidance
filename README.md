@@ -20,7 +20,11 @@ Run the `sao.ipynb` notebook which provides detailed instructions.
 - Links to each model are provided in the notebook
 
 ## Using torchcrepe fork
-I had to enable torch grad for torchcrepe so I made a fork use `git clone https://github.com/Ocrabit/torchcrepe.git torchcrepe_package` to make a local folder and then uncomment the local editable line in uv pyproject.toml.
+I had to enable torch grad for torchcrepe so I made a fork use 
+```bash
+git clone https://github.com/Ocrabit/torchcrepe.git torchcrepe_package
+```
+to make a local folder and then uncomment the local editable line in uv pyproject.toml.
 
 ## Using torch.save
 Torch.save for .wav files requires torchcodec, we don't need to use torch save if we just view it in jupyter notebook 
