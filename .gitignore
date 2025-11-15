@@ -18,6 +18,8 @@ local
 models/
 checkpoints/
 wandb/
+soundfonts/
+torchcrepe_package/
 
 # OS
 .DS_Store

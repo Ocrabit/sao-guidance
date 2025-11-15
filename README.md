@@ -19,7 +19,14 @@ Run the `sao.ipynb` notebook which provides detailed instructions.
 - Visit the model's HF page to request access (fill out usage form)
 - Links to each model are provided in the notebook
 
-### Using torch.save
+## Using torchcrepe fork
+I had to enable torch grad for torchcrepe so I made a fork use 
+```bash
+git clone https://github.com/Ocrabit/torchcrepe.git torchcrepe_package
+```
+to make a local folder and then uncomment the local editable line in uv pyproject.toml.
+
+## Using torch.save
 Torch.save for .wav files requires torchcodec, we don't need to use torch save if we just view it in jupyter notebook 
 using the audio display feature. But its fun to save wav files so I made a shell script `patch_torchcodec_mac.sh` that 
 fixes the issue.
@@ -39,9 +46,12 @@ If you aren't on mac and are still reading this probably just use conda, I might
 #### Note on where to save your data
 I .gitignored the following directories `data/` `local/` and `stable-audio-tools/`
 
-I mostly use them as you would assume I put data in the data/ folder, I do local jupyter notebooks or bits of code that I want to play with without commiting in local/, and I clone stable-audio-tools into the respective dir so I can play with their code there.
+I mostly use them as you would assume I put data in the data/ folder, I do local jupyter notebooks or bits of code that I want to play with without committing in local/, and I clone stable-audio-tools into the respective dir so I can play with their code there.
 
 In the `pyproject.toml` you can uncomment the bottom lines if you want to run off of a local editable install of `stable-audio-tools`
 
-To clone their repo locally run `git clone https://github.com/Stability-AI/stable-audio-tools.git stable-audio-tools`
+To clone their repo locally run 
+```bash
+git clone https://github.com/Stability-AI/stable-audio-tools.git stable-audio-tools
+```
 Although for now I recommend cloning from `git clone https://github.com/drscotthawley/stable-audio-tools.git` this has mps support for macs - courtesy of Scott Hawley ;)
