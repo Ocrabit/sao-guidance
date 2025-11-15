@@ -1,13 +1,31 @@
 from IPython.display import Audio, HTML
-import pretty_midi
+# import pretty_midi  # I think this has some errors on windows
 import urllib.request, os
 import torch
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import numpy as np
 import gradio as gr
+import torchaudio
+
 
 LINE_WIDTH = 2
+
+# fix torchaudio load
+_TORCHAUDIO_LOAD = torchaudio.load
+def _torchload_with_fallback(uri, *args, **kwargs):
+    try:
+        return _TORCHAUDIO_LOAD(uri, *args, **kwargs)
+    except Exception:
+        # fallback to soundfile
+        import soundfile as sf
+        audio, sr = sf.read(uri, always_2d=True)
+        audio = torch.tensor(audio.T)  # channels_first
+        if kwargs.get("normalize", True):
+            audio = audio.float() / 32768.0
+        return audio, sr
+
+torchaudio.load = _torchload_with_fallback
 
 # Helpers
 def get_default_soundfont():
@@ -39,11 +57,11 @@ def get_github_audio(url, filename=None):
         print(f"Using cached file: {path}")
     return path
 
-def render_midi(pm_obj: pretty_midi.PrettyMIDI, sample_rate=16000):
-    return Audio(generate_audio_midi(pm_obj, sample_rate), rate=sample_rate)
+# def render_midi(pm_obj: pretty_midi.PrettyMIDI, sample_rate=16000):
+#     return Audio(generate_audio_midi(pm_obj, sample_rate), rate=sample_rate)
 
-def generate_audio_midi(pm_obj: pretty_midi.PrettyMIDI, sample_rate=16000, path_to_soundfont=get_default_soundfont()):
-    return pm_obj.fluidsynth(synthesizer=path_to_soundfont, fs=sample_rate)
+# def generate_audio_midi(pm_obj: pretty_midi.PrettyMIDI, sample_rate=16000, path_to_soundfont=get_default_soundfont()):
+#     return pm_obj.fluidsynth(synthesizer=path_to_soundfont, fs=sample_rate)
 
 
 def plot_pitch(pitch, sample_rate, hop_length=None):
@@ -99,7 +117,7 @@ def plot_pitch_comparison(pitch, target_pitch, sample_rate, hop_length=None, ove
         plt.tight_layout()
 
     plt.show()
-
+        
 # Curtesy of Claude and I
 def animate_pitch_arrays(pitch_array, sample_rate, target_pitch=None, hop_length=None, interval=200):
     assert len({p.shape[-1] for p in pitch_array}) == 1, f"Unequal lengths: {[p.shape[-1] for p in pitch_array]}"
