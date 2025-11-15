@@ -57,11 +57,12 @@ def get_github_audio(url, filename=None):
         print(f"Using cached file: {path}")
     return path
 
-# def render_midi(pm_obj: pretty_midi.PrettyMIDI, sample_rate=16000):
-#     return Audio(generate_audio_midi(pm_obj, sample_rate), rate=sample_rate)
+def render_midi(pm_obj, sample_rate=16000):
+    return Audio(generate_audio_midi(pm_obj, sample_rate), rate=sample_rate)
 
-# def generate_audio_midi(pm_obj: pretty_midi.PrettyMIDI, sample_rate=16000, path_to_soundfont=get_default_soundfont()):
-#     return pm_obj.fluidsynth(synthesizer=path_to_soundfont, fs=sample_rate)
+def generate_audio_midi(pm_obj, sample_rate=16000, path_to_soundfont=None):
+    if not path_to_soundfont: path_to_soundfont = get_default_soundfont()
+    return pm_obj.fluidsynth(synthesizer=path_to_soundfont, fs=sample_rate)
 
 
 def plot_pitch(pitch, sample_rate, hop_length=None):
