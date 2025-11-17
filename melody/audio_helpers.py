@@ -304,17 +304,24 @@ def create_gradio_interface(pitch_array, target_pitch, sample_rate, audio_array=
 
         # Play button starts timer
         def start_playing():
-            return gr.Timer(active=True), gr.Button(visible=False), gr.Button(visible=True)
-
-        # Stop button stops timer
+            return (
+                gr.update(active=True),      # timer
+                gr.update(visible=False),    # play_btn
+                gr.update(visible=True),     # stop_btn
+            )
+        
         def stop_playing():
-            return gr.Timer(active=False), gr.Button(visible=True), gr.Button(visible=False)
-
+            return (
+                gr.update(active=False),     # timer
+                gr.update(visible=True),     # play_btn
+                gr.update(visible=False),    # stop_btn
+            )
+        
         play_btn.click(
             start_playing,
             outputs=[timer, play_btn, stop_btn]
         )
-
+        
         stop_btn.click(
             stop_playing,
             outputs=[timer, play_btn, stop_btn]
